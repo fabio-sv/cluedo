@@ -25,6 +25,7 @@ const rounds = data.map(d => d.rounds)
 const roundsPBW = data.map(d => d.roundsPBW);
 
 console.log({
+  games: count,
   rounds: {
     average: Number(rounds.reduce((accum, curr) => accum + curr, 0) / count).toFixed(2),
     max: getMax(rounds),
