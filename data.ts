@@ -7,7 +7,7 @@ const rooms = ["Kitchen", "Ballroom", "Conservatory", "Dining Room", "Cellar", "
 
 const TABLE_IDX = 64;  // special idx for table
 
-const _playerNames = ["Daenerys", "Jon", "Aberforth", "Bellatrix"];
+export const _playerNames = ["Daenerys", "Jon", "Aberforth", "Bellatrix"];
 const players: Player[] = _playerNames.map<Player>((name, idx) => ({
     idx,
     name,

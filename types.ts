@@ -1,3 +1,18 @@
+export interface IGame {
+    solution: CluedoSet;
+    cardsPerHand: number;
+    players: Player[];
+    table: string[];
+    round: number;
+    winner: number;
+
+    deck: {
+        characters: string[];
+        weapons: string[];
+        rooms: string[];
+    }
+}
+
 export type Player = {
     idx: number;
     name: string;
@@ -33,4 +48,12 @@ export type CluedoSet = {
     character: string;
     weapon: string;
     room: string;
+}
+
+export type Outcome = {
+    player: Player; 
+    guess: CluedoSet; 
+    solution: CluedoSet;
+    rounds: number;
+    roundsPBW: number;
 }
