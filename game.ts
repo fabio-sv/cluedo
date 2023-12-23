@@ -1,6 +1,6 @@
 import { TABLE_IDX, characters, rooms, weapons } from "./data.ts";
 import { _init_knowledge } from "./init.ts";
-import { CluedoAtom, CluedoSet, IGame, Outcome, Player, Status } from "./types.ts";
+import { Answer, CluedoAtom, CluedoSet, IGame, Outcome, Player, Status } from "./types.ts";
 import { ask, choose, draw, guess, shuffle, solution, update } from "./util.ts";
 
 // **************************************************************
@@ -31,8 +31,9 @@ export class Game implements IGame {
     table: string[];
     round: number;
     winner: number;
+    answers: Answer[];
     deck: { characters: string[]; weapons: string[]; rooms: string[]; };
-    debuggingEnabled: boolean = false;
+    debuggingEnabled = false;
 
     constructor(playerNames: string[]) {
         this.round = 0;
@@ -55,6 +56,8 @@ export class Game implements IGame {
             weapon: choose(this.deck.weapons),
             room: choose(this.deck.rooms),
         }
+
+        this.answers = [];
 
         // at first, is all cards, but after splices, becomes leftovers
         this.table = shuffle(this.deck.characters, this.deck.weapons, this.deck.rooms)
@@ -92,10 +95,10 @@ export class Game implements IGame {
     }
 
     debugging(enabled: boolean) {
-        this.debuggingEnabled = true;
+        this.debuggingEnabled = enabled;
     }
 
-    debug(...data: any[]) {
+    debug(...data: unknown[]) {
         if (this.debuggingEnabled) {
             console.debug(...data);
         }
@@ -135,6 +138,12 @@ export class Game implements IGame {
             if (player.idx != current.idx) {
                 this.debug(`${current.idx}: asking ${player.name}`);
                 const response = ask(player, currentGuess)
+
+                this.answers.push({
+                    interrogator: current.idx,
+                    responder: player.idx,
+                    set: currentGuess
+                });
 
                 if (response) {
                     this.debug(`${current.idx}: ${player.name} can help <${response}>. Adding to ${current.name}'s knowledge.`)

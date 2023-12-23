@@ -5,7 +5,7 @@ export interface IGame {
     table: string[];
     round: number;
     winner: number;
-
+    answers: Answer[];
     deck: {
         characters: string[];
         weapons: string[];
@@ -38,7 +38,7 @@ export type CluedoAtom = {
     status: Status;
 }
 
-export type Question = {
+export type Answer = {
     interrogator: number; // who asked
     responder?: number; // who answered (nullable)
     set: CluedoSet // what they asked for

@@ -1,5 +1,5 @@
 import { TABLE_IDX } from "./data.ts";
-import { CluedoAtom, CluedoSet, Knowledge, Player, Question, Status } from "./types.ts";
+import { CluedoAtom, CluedoSet, Knowledge, Player, Status } from "./types.ts";
 
 
 function random(min: number, max: number): number {
@@ -95,9 +95,10 @@ function update(player: Player, updates: CluedoAtom[]): Knowledge {
     return player.knowledge;
 }
 
-
 // THE BRAIN
 function getGuessAtom(array: CluedoAtom[], self_idx: number): string {
+    const shuffled_array = shuffle(array);
+
     // valid for guessing is either:
     // 1. unknown cards
     // 2. solution first
@@ -105,11 +106,8 @@ function getGuessAtom(array: CluedoAtom[], self_idx: number): string {
     // 4. table cards
     // 5. fallback
 
-    const shuffled_array = shuffle(array);
-    let guess: CluedoAtom | undefined;
-
     // 1
-    guess = shuffled_array.find(c => c.status === Status.UNKNOWN);
+    let guess = shuffled_array.find(c => c.status === Status.UNKNOWN);
     if (guess) return guess.name;
 
     // 2
@@ -128,18 +126,6 @@ function getGuessAtom(array: CluedoAtom[], self_idx: number): string {
     guess = shuffled_array.find(c => c);
     if (guess) return guess.name;
 
-    // const guess = shuffled_array.find(c =>
-    //     (c.status === Status.UNKNOWN) || // 1
-    //     (c.status === Status.SOLUTION) ||  // 2
-    //     (c.status === Status.FOUND && c.location === self_idx) || // 3
-    //     (c.status === Status.FOUND && c.location === TABLE_IDX) || // 4
-    //     (c) // fallback if all of set have been found, player has none of set, and table has none of set.
-    //     // Example: Say a player gets characters and weapons, but no rooms. The cards on the table don't include rooms.
-    //     // Which card do we use in the guess? 
-    //     // As a rule, should use one of the cards from the person you will ask last since you could gain information from prior players 
-    //     // (TO BE IMPLEMENTED)
-    // );
-
     throw new Error(`GUESS ATOM ERROR: ${JSON.stringify(array)} for player ${JSON.stringify(self_idx)}`);
 }
 
@@ -154,9 +140,12 @@ function guess(player: Player): CluedoSet {
             weapon,
             room
         }
-        // @ts-ignore
-    } catch (error: { message: string }) {
-        throw new Error(`GUESS ERROR: ${JSON.stringify(player)}\n${error?.message}`)
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            throw new Error(`GUESS ERROR: ${JSON.stringify(player)}\n${error?.message}`)
+        }
+
+        throw new Error(`GUESS ERROR: ${JSON.stringify(player)}\n${error}`)
     }
 }
 
