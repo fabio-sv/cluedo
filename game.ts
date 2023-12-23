@@ -45,9 +45,9 @@ export class Game implements IGame {
         }))
 
         this.deck = {
-            characters: characters,
-            weapons: weapons,
-            rooms: rooms
+            characters: [...characters],
+            weapons: [...weapons],
+            rooms: [...rooms]
         }
 
         this.solution = {
@@ -121,7 +121,7 @@ export class Game implements IGame {
                 guess: currentSolution,
                 solution: this.solution,
                 rounds: this.round,
-                roundsPBW: Math.floor(this.round / this.players.length)
+                roundsPBW: Math.ceil(this.round / this.players.length)
             };
         }
 
