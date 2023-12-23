@@ -6,24 +6,45 @@ function random(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function getMax(arr: number[]) {
+    let len = arr.length;
+    let max = -Infinity;
+
+    while (len--) {
+        max = arr[len] > max ? arr[len] : max;
+    }
+    return max;
+}
+
+function getMin(arr: number[]) {
+    let len = arr.length;
+    let min = Infinity;
+
+    while (len--) {
+        min = arr[len] < min ? arr[len] : min;
+    }
+
+    return min;
+}
+
 function stdDev(arr: number[]) {
     // Step 1: Find the mean
     const mean = arr.reduce((sum, value) => sum + value, 0) / arr.length;
-  
+
     // Step 2: Find the deviations
     const deviations = arr.map(value => value - mean);
-  
+
     // Step 3: Square each deviation
     const squaredDeviations = deviations.map(deviation => deviation ** 2);
-  
+
     // Step 4: Find the mean of the squared deviations
     const meanSquaredDeviations = squaredDeviations.reduce((sum, value) => sum + value, 0) / arr.length;
-  
+
     // Step 5: Take the square root
     const standardDeviation = Math.sqrt(meanSquaredDeviations);
-  
+
     return standardDeviation;
-  }
+}
 
 function choose<T>(array: T[]): T {
     return array.splice(random(0, array.length - 1), 1)[0];
@@ -169,5 +190,7 @@ export {
     guess,
     ask,
     solution,
-    stdDev
+    stdDev,
+    getMax,
+    getMin
 }

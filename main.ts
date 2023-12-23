@@ -1,24 +1,25 @@
 import { _playerNames } from "./data.ts";
 import { Game } from "./game.ts";
-import { stdDev } from "./util.ts";
+import { getMax, getMin, stdDev } from "./util.ts";
 
-const count = 100_000;
+const count = 1_000_000;
+const data: { rounds: number; roundsPBW: number }[] = [];
 
-console.log(`Initializing ${count.toLocaleString()} games...`)
-const games = new Array<Game | undefined>(count).fill(undefined).map(() => new Game(_playerNames));
-console.log(`${count.toLocaleString()} games initialized, beginning...\n`)
+for (let index = 0; index < count; index++) {
+  const game = new Game(_playerNames);
 
-
-const data = games.map((game, index) => {
   while (true) {
     const outcome = game.playRound();
 
     if (outcome) {
-      // console.log(`${index + 1}: WINNER!`, outcome.player.name, outcome.rounds, outcome.roundsPBW)
-      return outcome;
+      data.push({
+        rounds: outcome.rounds,
+        roundsPBW: outcome.roundsPBW
+      })
+      break;
     }
   }
-})
+}
 
 const rounds = data.map(d => d.rounds)
 const roundsPBW = data.map(d => d.roundsPBW);
@@ -26,14 +27,14 @@ const roundsPBW = data.map(d => d.roundsPBW);
 console.log({
   rounds: {
     average: Number(rounds.reduce((accum, curr) => accum + curr, 0) / count).toFixed(2),
-    max: Math.max(...rounds),
-    min: Math.min(...rounds),
+    max: getMax(rounds),
+    min: getMin(rounds),
     deviation: Number(stdDev(rounds).toFixed(2)),
   },
   pbw: {
     average: Number(roundsPBW.reduce((accum, curr) => accum + curr, 0) / count).toFixed(2),
-    max: Math.max(...roundsPBW),
-    min: Math.min(...roundsPBW),
+    max: getMax(roundsPBW),
+    min: getMin(roundsPBW),
     deviation: Number(stdDev(roundsPBW).toFixed(2)),
   },
 });
