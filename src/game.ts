@@ -30,7 +30,7 @@ export class Game implements IGame {
     players: Player[];
     table: string[];
     round: number;
-    winner: number;
+    winner: number | undefined;
     answers: Answer[];
     deck: { characters: string[]; weapons: string[]; rooms: string[]; };
     debuggingEnabled = false;
