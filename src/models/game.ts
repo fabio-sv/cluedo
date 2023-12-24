@@ -1,7 +1,7 @@
-import { TABLE_IDX, characters, rooms, weapons } from "./data.ts";
-import { _init_knowledge } from "./init.ts";
-import { Answer, CluedoAtom, CluedoSet, IGame, Outcome, Player, Status } from "./types.ts";
-import { ask, choose, draw, guess, shuffle, solution, update } from "./util.ts";
+import { TABLE_IDX, characters, rooms, weapons } from "../data/index.ts";
+import { _init_knowledge } from "../utils/init.ts";
+import { Answer, CluedoAtom, CluedoSet, IGame, Outcome, Player, Status } from "../types.ts";
+import { ask, choose, draw, guess, shuffle, solution, update } from "../utils/helpers.ts";
 
 // **************************************************************
 //                      CLUEDO GAME LOGIC

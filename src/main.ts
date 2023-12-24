@@ -1,6 +1,6 @@
-import { _playerNames } from "./data.ts";
-import { Game } from "./game.ts";
-import { getMax, getMin, stdDev } from "./util.ts";
+import { _playerNames } from "./data/index.ts";
+import { Game } from "./models/game.ts";
+import { getMax, getMin, stdDev } from "./utils/helpers.ts";
 
 const count = 1_000;
 const data: { rounds: number; roundsPBW: number }[] = [];

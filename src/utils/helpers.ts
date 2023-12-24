@@ -1,5 +1,5 @@
-import { TABLE_IDX } from "./data.ts";
-import { CluedoAtom, CluedoSet, Knowledge, Player, Status } from "./types.ts";
+import { TABLE_IDX } from "../data/index.ts";
+import { CluedoAtom, CluedoSet, Knowledge, Player, Status } from "../types.ts";
 
 
 function random(min: number, max: number): number {
