@@ -27,20 +27,11 @@ function getMin(arr: number[]) {
 }
 
 function stdDev(arr: number[]) {
-  // Step 1: Find the mean
   const mean = arr.reduce((sum, value) => sum + value, 0) / arr.length;
-
-  // Step 2: Find the deviations
   const deviations = arr.map((value) => value - mean);
-
-  // Step 3: Square each deviation
   const squaredDeviations = deviations.map((deviation) => deviation ** 2);
-
-  // Step 4: Find the mean of the squared deviations
   const meanSquaredDeviations =
     squaredDeviations.reduce((sum, value) => sum + value, 0) / arr.length;
-
-  // Step 5: Take the square root
   const standardDeviation = Math.sqrt(meanSquaredDeviations);
 
   return standardDeviation;
