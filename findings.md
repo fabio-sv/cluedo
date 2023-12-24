@@ -6,36 +6,44 @@
 
 ```ts
 function getGuessAtom(array: CluedoAtom[], self_idx: number): string {
-    const shuffled_array = shuffle(array);
+  const shuffled_array = shuffle(array);
 
-    // valid for guessing is either:
-    // 1. unknown cards
-    // 2. solution first
-    // 3. own cards
-    // 4. table cards
-    // 5. fallback
+  // valid for guessing is either:
+  // 1. unknown cards
+  // 2. solution first
+  // 3. own cards
+  // 4. table cards
+  // 5. fallback
 
-    // 1
-    let guess = shuffled_array.find(c => c.status === Status.UNKNOWN);
-    if (guess) return guess.name;
+  // 1
+  let guess = shuffled_array.find((c) => c.status === Status.UNKNOWN);
+  if (guess) return guess.name;
 
-    // 2
-    guess = shuffled_array.find(c => c.status === Status.SOLUTION);
-    if (guess) return guess.name;
+  // 2
+  guess = shuffled_array.find((c) => c.status === Status.SOLUTION);
+  if (guess) return guess.name;
 
-    // 3
-    guess = shuffled_array.find(c => c.status === Status.FOUND && c.location === self_idx);
-    if (guess) return guess.name;
+  // 3
+  guess = shuffled_array.find((c) =>
+    c.status === Status.FOUND && c.location === self_idx
+  );
+  if (guess) return guess.name;
 
-    // 4
-    guess = shuffled_array.find(c => c.status === Status.FOUND && c.location === TABLE_IDX);
-    if (guess) return guess.name;
+  // 4
+  guess = shuffled_array.find((c) =>
+    c.status === Status.FOUND && c.location === TABLE_IDX
+  );
+  if (guess) return guess.name;
 
-    // 5 - fallback
-    guess = shuffled_array.find(c => c);
-    if (guess) return guess.name;
+  // 5 - fallback
+  guess = shuffled_array.find((c) => c);
+  if (guess) return guess.name;
 
-    throw new Error(`GUESS ATOM ERROR: ${JSON.stringify(array)} for player ${JSON.stringify(self_idx)}`);
+  throw new Error(
+    `GUESS ATOM ERROR: ${JSON.stringify(array)} for player ${
+      JSON.stringify(self_idx)
+    }`,
+  );
 }
 ```
 
