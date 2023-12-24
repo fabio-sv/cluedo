@@ -2,7 +2,7 @@ import { _playerNames } from "./data.ts";
 import { Game } from "./game.ts";
 import { getMax, getMin, stdDev } from "./util.ts";
 
-const count = 1_000_000;
+const count = 1_000;
 const data: { rounds: number; roundsPBW: number }[] = [];
 
 for (let index = 0; index < count; index++) {
